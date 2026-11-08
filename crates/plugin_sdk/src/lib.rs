@@ -2,7 +2,6 @@
 
 #![warn(missing_docs)]
 
-use jsonschema::JSONSchema;
 use semver::Version;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
@@ -136,12 +135,13 @@ pub fn validate_manifest_contract(
     let schema_json: Value = serde_json::from_str(schema_text)
         .map_err(|error| ManifestValidationError::InvalidSchemaJson(error.to_string()))?;
 
-    let schema = JSONSchema::compile(&schema_json)
+    let schema = jsonschema::validator_for(&schema_json)
         .map_err(|error| ManifestValidationError::InvalidSchema(error.to_string()))?;
 
-    if let Err(errors) = schema.validate(&manifest_json) {
-        let details = errors.map(|error| error.to_string()).collect::<Vec<_>>().join("; ");
-        return Err(ManifestValidationError::SchemaMismatch(details));
+    let violations: Vec<String> =
+        schema.iter_errors(&manifest_json).map(|error| error.to_string()).collect();
+    if !violations.is_empty() {
+        return Err(ManifestValidationError::SchemaMismatch(violations.join("; ")));
     }
 
     let manifest: PluginManifest = serde_json::from_value(manifest_json)

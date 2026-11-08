@@ -60,6 +60,7 @@ The core depends only on the `PluginExecutor` trait, so adapters stay thin, and 
 
 - **Fail closed.** A plugin that is missing a field, has a stale signature or carries an unexpected import is rejected, not loaded with a warning.
 - **Sign the metadata, not just the bytes.** Signing the name, version and entry point alongside the hash stops a valid module being re-labelled as a different plugin or version.
+- **A minimal Wasmtime build.** Only the Cranelift compiler and the core runtime are compiled in, on the Wasmtime 36 long-term-support line. The component model, pooling allocator, compilation cache and parallel compilation are left out. That keeps the attack surface and the dependency tree small; CI audits it against the RustSec database.
 - **A narrow plugin ABI.** Plugins export integer-only functions that return scores in basis points. No pointers or strings cross the boundary, which removes a class of memory-safety issues at the cost of expressiveness.
 
 ## Getting started

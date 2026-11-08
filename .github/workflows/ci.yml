@@ -30,6 +30,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: rustsec/audit-check@v2.0.0
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # --locked builds cargo-audit with its own pinned dependencies, which
+      # compile on the toolchain pinned in rust-toolchain.toml.
+      - name: Install cargo-audit
+        run: cargo install cargo-audit --locked
+
+      - name: Audit dependencies (RustSec)
+        run: cargo audit

@@ -1,7 +1,6 @@
 use crate::manifest::PluginManifest;
 use ed25519_dalek::{Signature, Verifier, VerifyingKey};
 use hex::FromHex;
-use jsonschema::JSONSchema;
 use malware_core::CoreError;
 use serde::Deserialize;
 use serde_json::Value;
@@ -117,7 +116,7 @@ impl PluginLoader {
             ))
         })?;
 
-        let schema = JSONSchema::compile(&schema_json).map_err(|error| {
+        let schema = jsonschema::validator_for(&schema_json).map_err(|error| {
             CoreError::RuntimeUnavailable(format!(
                 "failed to compile schema '{}': {}",
                 self.manifest_schema_path.display(),
@@ -125,12 +124,13 @@ impl PluginLoader {
             ))
         })?;
 
-        if let Err(errors) = schema.validate(&manifest_json) {
-            let details = errors.map(|error| error.to_string()).collect::<Vec<_>>().join("; ");
+        let violations: Vec<String> =
+            schema.iter_errors(&manifest_json).map(|error| error.to_string()).collect();
+        if !violations.is_empty() {
             return Err(CoreError::PluginFailure(format!(
                 "manifest '{}' failed schema validation: {}",
                 manifest_path.display(),
-                details
+                violations.join("; ")
             )));
         }
 
