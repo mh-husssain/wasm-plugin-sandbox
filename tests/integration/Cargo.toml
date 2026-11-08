@@ -1,0 +1,15 @@
+[package]
+name = "malware-integration-tests"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+ed25519-dalek.workspace = true
+hex.workspace = true
+malware-cli = { path = "../../crates/cli" }
+malware-core = { path = "../../crates/core" }
+malware-plugin-runtime = { path = "../../crates/plugin_runtime" }
+malware-plugin-sdk = { path = "../../crates/plugin_sdk" }
+serde_json.workspace = true
+sha2.workspace = true
+wat.workspace = true

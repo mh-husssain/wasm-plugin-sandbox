@@ -1,0 +1,17 @@
+# Cargo build output
+/target/
+**/*.rs.bk
+*.pdb
+
+# Runtime output written relative to the working directory
+/quarantine/
+/artifacts/
+
+# Local trusted-signer file (the committed example is contracts/trusted-signers.example.json)
+/contracts/trusted-signers.json
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

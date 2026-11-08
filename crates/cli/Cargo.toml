@@ -1,0 +1,11 @@
+[package]
+name = "malware-cli"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+clap.workspace = true
+malware-core = { path = "../core" }
+malware-plugin-runtime = { path = "../plugin_runtime" }
+serde_json.workspace = true
+tokio.workspace = true

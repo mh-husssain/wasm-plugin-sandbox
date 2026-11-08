@@ -1,0 +1,13 @@
+{
+  "version": "1.0.0",
+  "signers": [
+    {
+      "key_id": "primary-signer-2026",
+      "algorithm": "ed25519",
+      "public_key_hex": "REPLACE_WITH_64_HEX_CHARS",
+      "status": "active",
+      "not_before": "2026-01-01T00:00:00Z",
+      "not_after": "2027-01-01T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+[package]
+name = "malware-plugin-sdk"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+jsonschema.workspace = true
+semver.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true

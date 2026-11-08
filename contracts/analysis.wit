@@ -1,0 +1,21 @@
+package malware:analysis;
+
+// API baseline for structured runtime ABI: 0.2.0
+interface analyzer {
+  record analysis-request {
+    sample-size-bytes: u32,
+    static-signal-count: u32,
+    dynamic-signal-count: u32,
+  }
+
+  record analysis-response {
+    risk-score: f32,
+    confidence: f32,
+    verdict: string,
+    summary: string,
+  }
+
+  init: func() -> result<_, string>;
+  execute: func(input: analysis-request) -> result<analysis-response, string>;
+  shutdown: func() -> result<_, string>;
+}

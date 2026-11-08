@@ -1,0 +1,29 @@
+[workspace]
+members = [
+  "crates/core",
+  "crates/plugin_runtime",
+  "crates/plugin_sdk",
+  "crates/cli",
+  "tests/integration"
+]
+resolver = "2"
+
+[workspace.package]
+edition = "2021"
+version = "0.1.0"
+
+[workspace.dependencies]
+anyhow = "1"
+clap = { version = "4.5", features = ["derive"] }
+ed25519-dalek = "2"
+hex = "0.4"
+jsonschema = "0.17"
+semver = "1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10"
+thiserror = "2"
+time = { version = "0.3", features = ["parsing", "formatting"] }
+tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
+wasmtime = "24"
+wat = "1"

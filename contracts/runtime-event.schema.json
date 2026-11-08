@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/schemas/runtime-event.schema.json",
+  "title": "Runtime Telemetry Event",
+  "description": "JSONL event shape emitted by plugin runtime telemetry.",
+  "type": "object",
+  "required": [
+    "event_version",
+    "timestamp",
+    "plugin_name",
+    "phase",
+    "outcome",
+    "message"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "event_version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "plugin_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "phase": {
+      "type": "string",
+      "enum": [
+        "manifest-validation",
+        "compatibility",
+        "capability-policy",
+        "package-validation",
+        "runtime-execution",
+        "execution",
+        "policy",
+        "quarantine"
+      ]
+    },
+    "outcome": {
+      "type": "string",
+      "enum": ["success", "failure", "denied", "recorded"]
+    },
+    "message": {
+      "type": "string"
+    }
+  }
+}
